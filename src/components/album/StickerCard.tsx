@@ -45,7 +45,7 @@ export function StickerCard({
     >
       <div
         className={cn(
-          "relative flex aspect-[3/4] flex-col justify-between bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 p-3 text-white",
+          "relative flex aspect-[16/9] flex-col justify-between bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-900 p-2.5 text-white sm:aspect-[4/3] sm:p-3 xl:aspect-[3/4]",
           item.is_special &&
             "from-amber-300 via-yellow-500 to-emerald-700 text-slate-950",
           compact && "aspect-[4/3] p-2",
@@ -73,7 +73,7 @@ export function StickerCard({
         <div className="flex flex-1 items-center justify-center">
           <div
             className={cn(
-              "flex h-20 w-20 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-3xl font-black uppercase shadow-inner backdrop-blur",
+              "flex h-14 w-14 items-center justify-center rounded-2xl border border-white/30 bg-white/10 text-xl font-black uppercase shadow-inner backdrop-blur sm:h-20 sm:w-20 sm:text-3xl",
               item.is_special && "border-white/50 bg-white/35",
               compact && "h-14 w-14 text-xl",
             )}
@@ -85,7 +85,7 @@ export function StickerCard({
         <div>
           <p
             className={cn(
-              "line-clamp-2 text-lg font-black leading-tight",
+              "line-clamp-2 text-base font-black leading-tight sm:text-lg",
               compact && "text-sm",
             )}
           >
@@ -102,7 +102,7 @@ export function StickerCard({
         </div>
       </div>
 
-      <div className={cn("space-y-3 p-3", compact && "p-2")}>
+      <div className={cn("space-y-2.5 p-2.5 sm:space-y-3 sm:p-3", compact && "p-2")}>
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-slate-900">
@@ -119,28 +119,30 @@ export function StickerCard({
         </div>
 
         {!compact ? (
-          <div className="space-y-2">
-          <label className="flex items-center gap-2 text-sm text-slate-700">
-            <input
-              type="checkbox"
-              checked={hasSticker}
-              onChange={(e) => submitUpdate({ hasSticker: e.target.checked })}
-              className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
-            />
-            La tengo pegada
-          </label>
-          <label className="block text-sm text-slate-700">
-            <span className="mb-1 block text-xs text-slate-500">Repetidas</span>
-            <input
-              type="number"
-              min={0}
-              value={repeated}
-              onChange={(e) =>
-                submitUpdate({ repeated: Number(e.target.value) })
-              }
-              className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm"
-            />
-          </label>
+          <div className="grid grid-cols-[1fr_92px] items-end gap-2">
+            <label className="flex min-h-9 items-center gap-2 rounded-lg bg-slate-50 px-2 text-sm text-slate-700">
+              <input
+                type="checkbox"
+                checked={hasSticker}
+                onChange={(e) => submitUpdate({ hasSticker: e.target.checked })}
+                className="h-4 w-4 rounded border-slate-300 text-emerald-600 focus:ring-emerald-500"
+              />
+              <span className="truncate">Pegada</span>
+            </label>
+            <label className="block text-sm text-slate-700">
+              <span className="mb-1 block text-[11px] text-slate-500">
+                Repetidas
+              </span>
+              <input
+                type="number"
+                min={0}
+                value={repeated}
+                onChange={(e) =>
+                  submitUpdate({ repeated: Number(e.target.value) })
+                }
+                className="w-full rounded-lg border border-slate-200 px-2 py-1 text-sm"
+              />
+            </label>
           </div>
         ) : null}
       </div>
