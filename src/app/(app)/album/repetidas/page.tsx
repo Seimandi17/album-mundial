@@ -1,4 +1,4 @@
-import { StickerGrid } from "@/components/album/StickerGrid";
+import { AlbumBrowser } from "@/components/album/AlbumBrowser";
 import { filterDuplicates, getAlbumGrid } from "@/lib/data/stickers";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -21,7 +21,7 @@ export default async function DuplicatesPage() {
           {duplicates.length} figuritas con al menos una repetida cargada.
         </p>
       </div>
-      <StickerGrid
+      <AlbumBrowser
         items={duplicates}
         compact
         emptyTitle="Sin repetidas"

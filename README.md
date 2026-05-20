@@ -35,6 +35,14 @@ supabase/migrations/002_real_album_readiness.sql
 
 Esa migración actualiza el álbum a 980 figuritas y agrega campos para el checklist real de Panini.
 
+Para cargar nombres, selecciones, especiales, secciones y orden desde el checklist generado:
+
+```txt
+supabase/seeds/003_real_checklist_scanini.sql
+```
+
+Ese archivo carga 980 figuritas y 68 especiales con fuente trazable.
+
 ### 3. Primer administrador
 
 ```sql

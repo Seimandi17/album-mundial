@@ -1,4 +1,4 @@
-import { StickerGrid } from "@/components/album/StickerGrid";
+import { AlbumBrowser } from "@/components/album/AlbumBrowser";
 import { filterMissing, getAlbumGrid } from "@/lib/data/stickers";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
@@ -21,7 +21,7 @@ export default async function MissingPage() {
           {missing.length} figuritas que aún no pegaste en tu álbum.
         </p>
       </div>
-      <StickerGrid
+      <AlbumBrowser
         items={missing}
         compact
         emptyTitle="¡Felicitaciones!"

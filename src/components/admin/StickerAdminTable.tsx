@@ -115,9 +115,14 @@ export function StickerAdminPanel({
               className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
             >
               <option value="numbered">Numerada</option>
+              <option value="panini_logo">Logo Panini</option>
               <option value="player">Jugador</option>
               <option value="team_logo">Escudo / logo selección</option>
               <option value="team_photo">Foto equipo</option>
+              <option value="fwc_special">Especial FWC</option>
+              <option value="official_emblem">Emblema oficial</option>
+              <option value="official_ball">Pelota oficial</option>
+              <option value="official_slogan">Slogan oficial</option>
               <option value="history">Historia Mundial</option>
               <option value="host_city">Sede / estadio</option>
               <option value="mascot">Mascota</option>

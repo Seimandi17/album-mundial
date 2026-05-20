@@ -16,7 +16,9 @@ Estos datos deben mantenerse trazables con `source_name`, `source_url` y `verifi
 
 - `supabase/migrations/002_real_album_readiness.sql`: migra una base ya creada de 700 a 980 y agrega campos reales.
 - `supabase/seed.sql`: crea figuritas numeradas hasta `album_config.total_stickers`.
+- `supabase/seeds/003_real_checklist_scanini.sql`: carga 980 figuritas con nombres, selecciones, tipos, especiales y orden.
 - `data/world-cup-2026-checklist.template.csv`: plantilla para armar/importar el checklist oficial.
+- `data/world-cup-2026-checklist.scanini.csv`: export CSV del checklist cargado desde Scanini.
 
 ## Campos reales disponibles
 
@@ -50,7 +52,30 @@ Debería devolver `980` en ambos casos si no hay stickers extra.
 
 ## Cómo cargar el checklist oficial
 
-Cuando tengas el checklist verificado:
+Checklist generado actualmente:
+
+- Fuente: [Scanini World Cup 2026 checklist](https://scanini.app/albums/world-cup-2026)
+- Total generado: 980
+- Secciones: 50 (`Panini`, `World Cup History`, 48 selecciones)
+- Especiales: 68
+- Orden global usado: `00`, `FWC 1-19`, y luego las selecciones en el orden publicado por Scanini.
+
+Para cargarlo en Supabase:
+
+1. Entrá a Supabase → **SQL Editor**.
+2. Abrí `supabase/seeds/003_real_checklist_scanini.sql`.
+3. Copiá todo el archivo y ejecutalo.
+4. Verificá:
+
+```sql
+select count(*) from public.stickers;
+select count(*) from public.stickers where is_special = true;
+select section, count(*) from public.stickers group by section order by min(number);
+```
+
+Deberías ver `980` stickers y `68` especiales.
+
+Si conseguís un checklist oficial de Panini o el álbum físico y querés reemplazar/confirmar datos:
 
 1. Armá un CSV usando `data/world-cup-2026-checklist.template.csv`.
 2. En Supabase → **Table Editor** → `stickers` → **Import data from CSV**.

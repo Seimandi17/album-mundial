@@ -1,5 +1,5 @@
 import { AlbumStats } from "@/components/album/AlbumStats";
-import { StickerGrid } from "@/components/album/StickerGrid";
+import { AlbumBrowser } from "@/components/album/AlbumBrowser";
 import { getCurrentProfile } from "@/lib/data/profile";
 import {
   filterDuplicates,
@@ -66,7 +66,7 @@ export default async function AlbumPage() {
           Supabase o usar el panel admin.
         </p>
       ) : (
-        <StickerGrid items={grid} />
+        <AlbumBrowser items={grid} />
       )}
     </div>
   );

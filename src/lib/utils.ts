@@ -19,6 +19,47 @@ export function formatStickerLabel(sticker: {
   return prefix;
 }
 
+export function formatStickerType(type: string) {
+  const labels: Record<string, string> = {
+    fwc_special: "Especial FWC",
+    history: "Historia",
+    host_city: "Sede",
+    mascot: "Mascota",
+    numbered: "Numerada",
+    official_ball: "Pelota oficial",
+    official_emblem: "Emblema oficial",
+    official_slogan: "Slogan oficial",
+    panini_logo: "Logo Panini",
+    player: "Jugador",
+    special: "Especial",
+    team_logo: "Escudo",
+    team_photo: "Foto equipo",
+    trophy: "Trofeo",
+  };
+
+  return labels[type] ?? type.replaceAll("_", " ");
+}
+
+export function getStickerInitials(sticker: {
+  code?: string | null;
+  country_code?: string | null;
+  team?: string | null;
+  player_name?: string | null;
+}) {
+  if (sticker.country_code) return sticker.country_code.slice(0, 3);
+  if (sticker.code) return sticker.code.split(" ")[0].slice(0, 3);
+  if (sticker.team) return sticker.team.slice(0, 3).toUpperCase();
+  if (sticker.player_name) {
+    return sticker.player_name
+      .split(" ")
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 3)
+      .toUpperCase();
+  }
+  return "FWC";
+}
+
 export function buildWhatsAppUrl(phone: string, message: string) {
   const digits = phone.replace(/\D/g, "");
   const text = encodeURIComponent(message);
