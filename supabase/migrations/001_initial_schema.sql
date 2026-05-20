@@ -27,10 +27,17 @@ create index profiles_province_city_idx on public.profiles (province, city);
 create table public.stickers (
   id uuid primary key default gen_random_uuid(),
   number integer not null unique,
+  code text unique,
+  country_code text,
   team text,
   player_name text,
   section text,
+  sticker_type text not null default 'numbered',
+  is_special boolean not null default false,
   image_url text,
+  source_name text,
+  source_url text,
+  verified_at timestamptz,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   constraint stickers_number_positive check (number > 0)
@@ -38,6 +45,10 @@ create table public.stickers (
 
 create index stickers_number_idx on public.stickers (number);
 create index stickers_section_idx on public.stickers (section);
+create index stickers_country_code_idx on public.stickers (country_code);
+create index stickers_sticker_type_idx on public.stickers (sticker_type);
+create index stickers_is_special_idx on public.stickers (is_special)
+  where is_special = true;
 
 -- ---------------------------------------------------------------------------
 -- Colección por usuario
@@ -65,12 +76,12 @@ create index user_stickers_repeated_idx on public.user_stickers (user_id, repeat
 create table public.album_config (
   id text primary key default 'mundial-2026',
   name text not null default 'Álbum Mundial 2026',
-  total_stickers integer not null default 700,
+  total_stickers integer not null default 980,
   updated_at timestamptz not null default now()
 );
 
 insert into public.album_config (id, name, total_stickers)
-values ('mundial-2026', 'Álbum Mundial 2026', 700)
+values ('mundial-2026', 'Álbum Mundial 2026', 980)
 on conflict (id) do nothing;
 
 -- ---------------------------------------------------------------------------
@@ -235,6 +246,13 @@ create or replace view public.user_sticker_summary as
 select
   us.user_id,
   s.number as sticker_number,
+  s.code as sticker_code,
+  s.country_code,
+  s.team,
+  s.player_name,
+  s.section,
+  s.sticker_type,
+  s.is_special,
   s.id as sticker_id,
   us.has_sticker,
   us.repeated_quantity,

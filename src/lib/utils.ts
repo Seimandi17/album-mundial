@@ -4,16 +4,19 @@ export function cn(...classes: Array<string | false | null | undefined>) {
 
 export function formatStickerLabel(sticker: {
   number: number;
+  code?: string | null;
   team?: string | null;
   player_name?: string | null;
 }) {
+  const prefix = sticker.code ? sticker.code : `#${sticker.number}`;
+
   if (sticker.player_name) {
-    return `#${sticker.number} · ${sticker.player_name}`;
+    return `${prefix} · ${sticker.player_name}`;
   }
   if (sticker.team) {
-    return `#${sticker.number} · ${sticker.team}`;
+    return `${prefix} · ${sticker.team}`;
   }
-  return `#${sticker.number}`;
+  return prefix;
 }
 
 export function buildWhatsAppUrl(phone: string, message: string) {

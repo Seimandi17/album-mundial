@@ -25,10 +25,21 @@ export function StickerGrid({
 
     return items.filter((item) => {
       const numberMatch = String(item.number).includes(q);
+      const codeMatch = item.code?.toLowerCase().includes(q);
+      const countryCodeMatch = item.country_code?.toLowerCase().includes(q);
       const teamMatch = item.team?.toLowerCase().includes(q);
       const playerMatch = item.player_name?.toLowerCase().includes(q);
       const sectionMatch = item.section?.toLowerCase().includes(q);
-      return numberMatch || teamMatch || playerMatch || sectionMatch;
+      const typeMatch = item.sticker_type.toLowerCase().includes(q);
+      return (
+        numberMatch ||
+        codeMatch ||
+        countryCodeMatch ||
+        teamMatch ||
+        playerMatch ||
+        sectionMatch ||
+        typeMatch
+      );
     });
   }, [items, query]);
 
@@ -39,11 +50,11 @@ export function StickerGrid({
   return (
     <div className="space-y-4">
       <Input
-        label="Buscar por número, equipo o jugador"
+        label="Buscar por número, código, selección, tipo o jugador"
         name="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Ej: 125, Argentina, Messi..."
+        placeholder="Ej: 125, ARG 10, Argentina, especial, Messi..."
       />
       <div
         className={

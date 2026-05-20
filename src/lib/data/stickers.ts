@@ -37,6 +37,7 @@ export async function getUserCollection(
   userId: string,
 ): Promise<UserStickerWithSticker[]> {
   const supabase = await createClient();
+  await ensureUserStickerRows(userId);
 
   const { data, error } = await supabase
     .from("user_stickers")
@@ -45,7 +46,6 @@ export async function getUserCollection(
     .order("number", { foreignTable: "stickers", ascending: true });
 
   if (error || !data?.length) {
-    await ensureUserStickerRows(userId);
     const retry = await supabase
       .from("user_stickers")
       .select("*, stickers(*)")

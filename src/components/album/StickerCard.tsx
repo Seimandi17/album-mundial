@@ -47,8 +47,16 @@ export function StickerCard({
             <p className="truncate text-xs text-slate-500">{item.section}</p>
           ) : null}
         </div>
-        {repeated > 0 ? <Badge tone="warning">x{repeated}</Badge> : null}
+        <div className="flex shrink-0 flex-col items-end gap-1">
+          {item.is_special ? <Badge tone="success">Especial</Badge> : null}
+          {repeated > 0 ? <Badge tone="warning">x{repeated}</Badge> : null}
+        </div>
       </div>
+      {item.team || item.sticker_type !== "numbered" ? (
+        <p className="mt-1 truncate text-xs text-slate-500">
+          {[item.team, item.sticker_type].filter(Boolean).join(" · ")}
+        </p>
+      ) : null}
 
       {!compact ? (
         <div className="mt-3 space-y-2">

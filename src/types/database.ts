@@ -14,10 +14,17 @@ export type Profile = {
 export type Sticker = {
   id: string;
   number: number;
+  code: string | null;
+  country_code: string | null;
   team: string | null;
   player_name: string | null;
   section: string | null;
+  sticker_type: string;
+  is_special: boolean;
   image_url: string | null;
+  source_name: string | null;
+  source_url: string | null;
+  verified_at: string | null;
   created_at: string;
   updated_at: string;
 };

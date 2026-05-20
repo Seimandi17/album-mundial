@@ -19,6 +19,7 @@ album-mundial/
 ├── docs/ARCHITECTURE.md          # Este documento
 ├── supabase/
 │   ├── migrations/001_initial_schema.sql
+│   ├── migrations/002_real_album_readiness.sql
 │   └── seed.sql                  # Figuritas numeradas 1..N
 ├── src/
 │   ├── app/
@@ -32,7 +33,7 @@ album-mundial/
 │   │   ├── supabase/             # Clientes browser/server/middleware
 │   │   └── matches.ts            # Lógica de coincidencias
 │   └── types/database.ts
-└── middleware.ts                 # Sesión + rutas públicas
+└── src/proxy.ts                  # Sesión + rutas públicas
 ```
 
 ## Modelo de datos
@@ -42,7 +43,7 @@ El modelo sugerido se implementa con convenciones de Supabase:
 | Concepto MVP | Tabla real | Notas |
 |--------------|------------|-------|
 | `users` | `profiles` | 1:1 con `auth.users`, creado por trigger al registrarse |
-| `stickers` | `stickers` | Catálogo del álbum; puede tener solo `number` al inicio |
+| `stickers` | `stickers` | Catálogo del álbum; soporta `number`, `code`, selección, tipo, especial y fuente |
 | `user_stickers` | `user_stickers` | Estado por usuario: `has_sticker`, `repeated_quantity` |
 | — | `album_config` | Total de figuritas y nombre del álbum (MVP único) |
 
@@ -116,9 +117,20 @@ Implementado en `src/lib/matches.ts`:
 
 **Escalabilidad futura**: mover a función SQL/RPC o materialized view `user_sticker_summary` (ya creada como vista) con índices por provincia.
 
-## Figuritas sin datos reales
+## Checklist real Panini 2026
 
-El seed crea figuritas `#1` … `#N` sin `team` ni `player_name`. El admin puede completar metadatos después sin romper colecciones existentes (`sticker_id` estable por UUID).
+El álbum real se configura con **980 figuritas**. El seed crea `#1` … `#980` sin inventar jugadores/equipos. La migración `002_real_album_readiness.sql` agrega campos para cargar el checklist real de forma trazable:
+
+- `code`, por ejemplo `ARG 10`
+- `country_code`, por ejemplo `ARG`
+- `team`
+- `player_name`
+- `section`
+- `sticker_type`
+- `is_special`
+- `source_name`, `source_url`, `verified_at`
+
+Ver `docs/REAL_ALBUM_SETUP.md` para el paso a paso de carga y verificación.
 
 ## Deploy (Vercel)
 

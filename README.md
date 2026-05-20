@@ -25,7 +25,15 @@ Completá `.env.local` con las credenciales de tu proyecto Supabase.
 En el [SQL Editor de Supabase](https://supabase.com/dashboard):
 
 1. Ejecutá `supabase/migrations/001_initial_schema.sql`
-2. Ejecutá `supabase/seed.sql` (genera figuritas del 1 al total configurado, por defecto 700)
+2. Ejecutá `supabase/seed.sql` (genera figuritas del 1 al total configurado, por defecto 980)
+
+Si ya habías ejecutado la primera migración con el MVP inicial, ejecutá además:
+
+```txt
+supabase/migrations/002_real_album_readiness.sql
+```
+
+Esa migración actualiza el álbum a 980 figuritas y agrega campos para el checklist real de Panini.
 
 ### 3. Primer administrador
 
@@ -60,6 +68,8 @@ Abrí [http://localhost:3000](http://localhost:3000).
 ## Documentación
 
 Ver [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) para arquitectura, modelo de datos y decisiones técnicas.
+
+Ver [docs/REAL_ALBUM_SETUP.md](./docs/REAL_ALBUM_SETUP.md) para preparar el checklist real Panini Mundial 2026 sin cargar datos inventados.
 
 ## Deploy en Vercel
 
